@@ -1,0 +1,12 @@
+E:\Demo\VideoTools\VideoTools\bin\Debug\ffmpeg\bin\ffmpeg.exe
+E:\Demo\VideoTools\VideoTools\bin\Debug\VideoTools.exe.config
+E:\Demo\VideoTools\VideoTools\bin\Debug\VideoTools.exe
+E:\Demo\VideoTools\VideoTools\bin\Debug\VideoTools.pdb
+E:\Demo\VideoTools\VideoTools\obj\Debug\Com.Garfield.VideoTools.MainForm.resources
+E:\Demo\VideoTools\VideoTools\obj\Debug\Com.Garfield.VideoTools.Properties.Resources.resources
+E:\Demo\VideoTools\VideoTools\obj\Debug\VideoTools.csproj.GenerateResource.Cache
+E:\Demo\VideoTools\VideoTools\obj\Debug\VideoTools.exe
+E:\Demo\VideoTools\VideoTools\obj\Debug\VideoTools.pdb
+E:\Demo\VideoTools\VideoTools\obj\Debug\VideoTools.csprojResolveAssemblyReference.cache
+E:\Demo\VideoTools\VideoTools\bin\Debug\water\black_water.png
+E:\Demo\VideoTools\VideoTools\bin\Debug\water\water.png
