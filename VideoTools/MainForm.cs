@@ -26,7 +26,7 @@ namespace Com.Garfield.VideoTools
             this.txtVideoOutputDirectory.Text = FFMpegParameters.OutputDirectory;
 
             FFMpegParameters.WaterDrections = new List<WaterDrection>();
-            FFMpegParameters.WaterDrections.Add(WaterDrection.TopLeftCorner);
+            FFMpegParameters.WaterDrections.Add(WaterDrection.TopRightCorner);
             FFMpegParameters.Location = new WaterLocation()
             {
                 X = Convert.ToSingle(System.Configuration.ConfigurationManager.AppSettings["WaterLocationX"]),
