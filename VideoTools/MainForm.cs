@@ -241,7 +241,7 @@ namespace Com.Garfield.VideoTools
                         //var cmd = $"-i {file} -i {FFMpegParameters.WaterPath} -filter_complex \"pad=height=ih+40:color=#71cbf4,overlay={FFMpegParameters.Location.X}:{FFMpegParameters.Location.Y}\" {outputPath}";
                         //var cmd = $"-i {file} -i {FFMpegParameters.WaterPath} -filter_complex \"overlay={FFMpegParameters.Location.X}:{FFMpegParameters.Location.Y}\" -b 1024k -acodec copy {outputPath}";
                         WriteLog($"FFMpegPath：{ FFMpegPath}");
-                        WriteLog($"视频路径：{ file}");
+                        //WriteLog($"视频路径：{ file}");
                         WriteLog($"输出目录：{FFMpegParameters.OutputDirectory}");
                         WriteLog($"输出文件路径：{outputPath}");
                         WriteLog($"FFMpeg命令：{cmd}");
