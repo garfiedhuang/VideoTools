@@ -41,11 +41,12 @@ namespace Com.Garfield.VideoTools
         {
             //创建一个ProcessStartInfo对象 并设置相关属性
             var oInfo = new ProcessStartInfo(FFmpegPath, Parameters);
-            oInfo.UseShellExecute = false;
-            oInfo.CreateNoWindow = true;
-            oInfo.RedirectStandardOutput = true;
-            oInfo.RedirectStandardError = true;
-            oInfo.RedirectStandardInput = true;
+            //oInfo.FileName = "cmd.exe";
+            oInfo.UseShellExecute = false;//是否使用操作系统shell启动
+            oInfo.CreateNoWindow = true;//不显示程序窗口
+            oInfo.RedirectStandardOutput = true;//由调用程序获取输出信息
+            oInfo.RedirectStandardError = true;//重定向标准错误输入
+            oInfo.RedirectStandardInput = true;//接受来自调用程序的输入信息
 
             //创建一个字符串和StreamReader 用来获取处理结果
             string output = null;
@@ -55,16 +56,16 @@ namespace Com.Garfield.VideoTools
             {
                 //调用ffmpeg开始处理命令
                 var proc = Process.Start(oInfo);
+                proc.StandardInput.AutoFlush = true;
 
-                //proc.WaitForExit();
+                //获取输出流
+                srOutput = proc.StandardError;
 
-                ////获取输出流
-                //srOutput = proc.StandardError;
-
-                ////转换成string
-                //output = srOutput.ReadToEnd();
+                //转换成string
+                output = srOutput.ReadToEnd();
 
                 //关闭处理程序
+                proc.WaitForExit();
                 proc.Close();
             }
             catch (Exception)
@@ -81,6 +82,25 @@ namespace Com.Garfield.VideoTools
                 }
             }
             return output;
+        }
+
+        /// <summary>
+        /// 生成视频缩略图
+        /// </summary>
+        /// <param name="frameIndex"></param>
+        /// <param name="thubWidth"></param>
+        /// <param name="thubHeight"></param>
+        /// <param name="thubImagePath"></param>
+        /// <returns></returns>
+        public string GenThupImageCmd(int frameIndex, int thubWidth, int thubHeight, string thubImagePath)
+        {
+            //int frameIndex = 10;//为帧处在的秒数  
+            //int thubWidth = 80;//为缩略图的宽度  
+            //int thubHeight = 80; //为缩略图的高度  
+            //string thubImagePath = @"E:\2\2.jpg";//为生成的缩略图所在的路径  
+            string command = string.Format(" -ss {0} -vframes 1 -r 1 -ac 1 -ab 2 -s {1}*{2} -f image2 \"{3}\"", frameIndex, thubWidth, thubHeight, thubImagePath);
+
+            return command;
         }
 
     }

@@ -185,6 +185,12 @@ namespace Com.Garfield.VideoTools
             FFMpegParameters.Location.Y = Convert.ToSingle(this.txtWaterY.Text.Trim());
         }
 
+        private void chkCutVideo_CheckedChanged(object sender, EventArgs e)
+        {
+            this.txtStartTime.ReadOnly = !chkCutVideo.Checked;
+            this.txtEndTime.ReadOnly = !chkCutVideo.Checked;
+        }
+
         private void btnProcess_Click(object sender, EventArgs e)
         {
             var result = CheckParameters();
@@ -226,6 +232,8 @@ namespace Com.Garfield.VideoTools
                         var location = $"{FFMpegParameters.Location.X}:{FFMpegParameters.Location.Y}";
                         var waterLocation = string.Empty;
                         var waterPicture = string.Empty;
+                        var generateThumbnailCmd = string.Empty;
+                        var newVideoCmd = string.Empty;
 
                         if (FFMpegParameters.WaterDrections.Count == 2)
                         {
@@ -237,16 +245,49 @@ namespace Com.Garfield.VideoTools
                             waterLocation = $"overlay=main_w-overlay_w-{location}";
                             waterPicture = $"-i {FFMpegParameters.WaterPath}";
                         }
+
+                        if (this.chkIsGenerateThumbnail.Checked)
+                        {
+                            var thumbnailFileName = Path.Combine(FFMpegParameters.OutputDirectory, $"{Path.GetFileNameWithoutExtension(outputPath)}.jpg");
+                            generateThumbnailCmd = new FFmpegHelper().GenThupImageCmd(10, 800, 503, thumbnailFileName);
+                            generateThumbnailCmd = $"-i {outputPath} {generateThumbnailCmd}";
+                        }
+
+                        if (this.chkCutVideo.Checked)
+                        {
+                            var videoFileName = Path.Combine(FFMpegParameters.OutputDirectory, $"{Path.GetFileNameWithoutExtension(outputPath)}_last"+ Path.GetExtension(outputPath));
+                            newVideoCmd = $"-i {outputPath} -ss {this.txtStartTime.Text.Trim()} -to {this.txtEndTime.Text.Trim()} -c:v libx264 -c:a aac -strict experimental -b:a 98k {videoFileName} -y";
+                        }
+
+                        //ffmpeg - i./ plutopr.mp4 - vcodec copy - acodec copy - ss 00:00:10 - to 00:00:15./ cutout1.mp4 - y
+
+                        //- ss time_off set the start time offset 设置从视频的哪个时间点开始截取，上文从视频的第10s开始截取
+                        //- to 截到视频的哪个时间点结束。上文到视频的第15s结束。截出的视频共5s.
+                        //如果用 - t 表示截取多长的时间如 上文-to 换位 - t则是截取从视频的第10s开始，截取15s时长的视频。即截出来的视频共15s.
+
+                        //   注意的地方是：
+                        // 如果将 - ss放在 - i./ plutopr.mp4后面则 - to的作用就没了，跟 - t一样的效果了，变成了截取多长视频。一定要注意 - ss的位置。
+
+                        //参数解析
+                        //- vcodec copy表示使用跟原视频一样的视频编解码器。
+                        //-acodec copy表示使用跟原视频一样的音频编解码器。
+
+                        //-i 表示源视频文件
+                        //- y 表示如果输出文件已存在则覆盖。
+
                         var cmd = $"-i {file} {waterPicture} -filter_complex \"{waterLocation}\" {outputPath}";
                         //var cmd = $"-i {file} -i {FFMpegParameters.WaterPath} -filter_complex \"pad=height=ih+40:color=#71cbf4,overlay={FFMpegParameters.Location.X}:{FFMpegParameters.Location.Y}\" {outputPath}";
                         //var cmd = $"-i {file} -i {FFMpegParameters.WaterPath} -filter_complex \"overlay={FFMpegParameters.Location.X}:{FFMpegParameters.Location.Y}\" -b 1024k -acodec copy {outputPath}";
                         WriteLog($"FFMpegPath：{ FFMpegPath}");
-                        ////WriteLog($"视频路径：{ file}");
+                        WriteLog($"视频路径：{ file}");
                         WriteLog($"输出目录：{FFMpegParameters.OutputDirectory}");
                         WriteLog($"输出文件路径：{outputPath}");
                         WriteLog($"FFMpeg命令：{cmd}");
                         WriteLog($"FFMpeg命令执行开始时间：{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss:fff")}");
                         result = mpeg.RunProcess(cmd);
+                        if (!string.IsNullOrEmpty(generateThumbnailCmd)) result = mpeg.RunProcess(generateThumbnailCmd);//缩略图截图
+                        if (!string.IsNullOrEmpty(newVideoCmd)) result = mpeg.RunProcess(newVideoCmd);//截取视频片段
+                        
                         WriteLog($"FFMpeg命令执行结束时间：{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss:fff")}");
                         if (!string.IsNullOrEmpty(result)) WriteLog(result);
                         WriteLog("====================================================");

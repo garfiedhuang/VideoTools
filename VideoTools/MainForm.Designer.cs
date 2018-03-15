@@ -54,6 +54,11 @@
             this.rtbOutputLog = new System.Windows.Forms.RichTextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtStartTime = new System.Windows.Forms.TextBox();
+            this.txtEndTime = new System.Windows.Forms.TextBox();
+            this.chkCutVideo = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -66,16 +71,21 @@
             this.groupBox1.Controls.Add(this.chkBottomLeftCorner);
             this.groupBox1.Controls.Add(this.chkTopRightCorner);
             this.groupBox1.Controls.Add(this.chkTopLeftCorner);
+            this.groupBox1.Controls.Add(this.chkCutVideo);
             this.groupBox1.Controls.Add(this.chkIsGenerateThumbnail);
             this.groupBox1.Controls.Add(this.btnOpenDirectory);
             this.groupBox1.Controls.Add(this.btnProcess);
             this.groupBox1.Controls.Add(this.btnSelectWaterPicture);
             this.groupBox1.Controls.Add(this.btnSelectVideoOutputDirectory);
             this.groupBox1.Controls.Add(this.btnSelectVideoInputDirectory);
+            this.groupBox1.Controls.Add(this.txtEndTime);
+            this.groupBox1.Controls.Add(this.txtStartTime);
             this.groupBox1.Controls.Add(this.txtWaterY);
             this.groupBox1.Controls.Add(this.txtWaterX);
+            this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.txtWaterPicture);
             this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.txtVideoOutputDirectory);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label3);
@@ -85,7 +95,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(13, 13);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(811, 181);
+            this.groupBox1.Size = new System.Drawing.Size(811, 208);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "参数设置";
@@ -162,7 +172,7 @@
             // btnProcess
             // 
             this.btnProcess.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnProcess.Location = new System.Drawing.Point(634, 135);
+            this.btnProcess.Location = new System.Drawing.Point(634, 149);
             this.btnProcess.Name = "btnProcess";
             this.btnProcess.Size = new System.Drawing.Size(156, 40);
             this.btnProcess.TabIndex = 13;
@@ -304,9 +314,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.rtbOutputLog);
-            this.groupBox2.Location = new System.Drawing.Point(13, 200);
+            this.groupBox2.Location = new System.Drawing.Point(13, 227);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(811, 292);
+            this.groupBox2.Size = new System.Drawing.Size(811, 318);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "输出日志";
@@ -323,7 +333,7 @@
             this.rtbOutputLog.Name = "rtbOutputLog";
             this.rtbOutputLog.ReadOnly = true;
             this.rtbOutputLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.rtbOutputLog.Size = new System.Drawing.Size(799, 266);
+            this.rtbOutputLog.Size = new System.Drawing.Size(799, 292);
             this.rtbOutputLog.TabIndex = 14;
             this.rtbOutputLog.Text = "";
             // 
@@ -331,11 +341,60 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(267, 173);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(77, 12);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "截取起(秒)：";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(412, 173);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(17, 12);
+            this.label8.TabIndex = 2;
+            this.label8.Text = "至";
+            // 
+            // txtStartTime
+            // 
+            this.txtStartTime.Location = new System.Drawing.Point(342, 168);
+            this.txtStartTime.Name = "txtStartTime";
+            this.txtStartTime.ReadOnly = true;
+            this.txtStartTime.Size = new System.Drawing.Size(59, 21);
+            this.txtStartTime.TabIndex = 11;
+            this.txtStartTime.Text = "00:00:00";
+            this.txtStartTime.TextChanged += new System.EventHandler(this.txtWaterX_TextChanged);
+            // 
+            // txtEndTime
+            // 
+            this.txtEndTime.Location = new System.Drawing.Point(435, 168);
+            this.txtEndTime.Name = "txtEndTime";
+            this.txtEndTime.ReadOnly = true;
+            this.txtEndTime.Size = new System.Drawing.Size(59, 21);
+            this.txtEndTime.TabIndex = 12;
+            this.txtEndTime.Text = "00:00:30";
+            this.txtEndTime.TextChanged += new System.EventHandler(this.txtWaterY_TextChanged);
+            // 
+            // chkCutVideo
+            // 
+            this.chkCutVideo.AutoSize = true;
+            this.chkCutVideo.Location = new System.Drawing.Point(102, 173);
+            this.chkCutVideo.Name = "chkCutVideo";
+            this.chkCutVideo.Size = new System.Drawing.Size(120, 16);
+            this.chkCutVideo.TabIndex = 10;
+            this.chkCutVideo.Text = "是否截取视频片段";
+            this.chkCutVideo.UseVisualStyleBackColor = true;
+            this.chkCutVideo.CheckedChanged += new System.EventHandler(this.chkCutVideo_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(836, 504);
+            this.ClientSize = new System.Drawing.Size(836, 557);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "MainForm";
@@ -377,6 +436,11 @@
         private System.Windows.Forms.Button btnProcess;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.TextBox txtEndTime;
+        private System.Windows.Forms.TextBox txtStartTime;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.CheckBox chkCutVideo;
     }
 }
 
